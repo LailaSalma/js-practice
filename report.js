@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { fetchAllProducts, totalMatches } from "./api.js"
 
 async function main() { 
@@ -15,7 +16,14 @@ async function main() {
 	console.log("total:", data.body.total);
 	console.log("match:", totalMatches(data.body));
 	console.log("low stock (< 10):", lowStock.length);
-	lowStock.forEach( (p) => console.log(p.title) );		
+	lowStock.forEach( (p) => console.log(p.title) );
+	
+	
+	if (totalMatches(data.body)) {
+	    console.log(chalk.green("Match"));
+	} else {
+	    console.log(chalk.red("No Match"));
+	}
 }
 
 main();
