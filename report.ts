@@ -1,5 +1,8 @@
 import chalk from "chalk";
-import { fetchAllProducts, totalMatches } from "./api.js"
+import {
+    fetchAllProducts,
+    totalMatches
+} from "./api.ts";
 
 async function main() { 
 	const data = await fetchAllProducts();
