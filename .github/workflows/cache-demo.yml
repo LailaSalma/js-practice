@@ -1,0 +1,29 @@
+name: Cache demo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  counter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Restore counter
+        uses: actions/cache/restore@v4
+        with:
+          path: counter.txt
+          key: counter-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            counter-
+
+      - name: Add this run
+        run: |
+          echo "run ${{ github.run_number }}" >> counter.txt
+          wc -l < counter.txt
+          cat counter.txt
+
+      - name: Save counter
+        if: ${{ !cancelled() }}
+        uses: actions/cache/save@v4
+        with:
+          path: counter.txt
+          key: counter-${{ github.run_id }}-${{ github.run_attempt }}
